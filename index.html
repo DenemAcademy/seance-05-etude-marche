@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Séance 5 — Étude de marché | DENEM Academy</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config={theme:{extend:{fontFamily:{'space':['Space Grotesk','sans-serif'],'mono':['JetBrains Mono','monospace'],'inter':['Inter','sans-serif']},colors:{'sol':{'black':'#1F0A32','dark':'#272B5C','accent':'#4CC0C0','cyan':'#30D9DE','navy':'#272B5C','deep':'#1F0A32','green':'#4CC0C0','purple':'#272B5C','orange':'#f97316','gray':'#64748d','lightgray':'#e8edf2','bg':'#ffffff','muted':'#f4f7fa'}}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+::selection{background:#4CC0C0;color:#1F0A32}
+body{cursor:none;background:#fff;color:#1F0A32;font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* Gradients */
+.gradient-text{background:linear-gradient(135deg,#272B5C,#4CC0C0,#30D9DE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 200%;animation:gs 6s ease infinite}
+.gradient-bg{background:linear-gradient(135deg,#272B5C,#4CC0C0,#30D9DE);background-size:200% 200%;animation:gs 8s ease infinite}
+
+/* Keyframes */
+@keyframes gs{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes floatSlow{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-18px) rotate(3deg)}}
+@keyframes floatReverse{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(12px) rotate(-2deg)}}
+@keyframes pulse-ring{0%{transform:scale(1);opacity:.4}100%{transform:scale(1.5);opacity:0}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes typewriter{from{width:0}to{width:100%}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+@keyframes bounceSubtle{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 5px rgba(76,192,192,.2)}50%{box-shadow:0 0 20px rgba(76,192,192,.4)}}
+@keyframes dash{to{stroke-dashoffset:0}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes wiggle{0%,100%{transform:rotate(0deg)}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+
+/* Float animations */
+.animate-float{animation:float 6s ease-in-out infinite}
+.animate-float-slow{animation:floatSlow 8s ease-in-out infinite}
+.animate-float-reverse{animation:floatReverse 7s ease-in-out infinite}
+.animate-bounce-subtle{animation:bounceSubtle 3s ease-in-out infinite}
+.animate-glow{animation:glow 3s ease-in-out infinite}
+.animate-wiggle{animation:wiggle 4s ease-in-out infinite}
+.animate-spin-slow{animation:rotate 20s linear infinite}
+
+/* Pulse ring effect */
+.pulse-ring{position:relative}.pulse-ring::after{content:'';position:absolute;inset:-4px;border-radius:inherit;border:2px solid #4CC0C0;animation:pulse-ring 2s cubic-bezier(.4,0,.6,1) infinite}
+
+/* Shimmer loading effect */
+.shimmer{background:linear-gradient(90deg,#f4f7fa 25%,#e8edf2 50%,#f4f7fa 75%);background-size:200% 100%;animation:shimmer 2s ease-in-out infinite}
+
+/* Typewriter */
+.typewriter{overflow:hidden;white-space:nowrap;border-right:2px solid #4CC0C0;animation:typewriter 2s steps(30) forwards,blink .8s step-end infinite}
+
+/* Cursor blink for terminal */
+.blink-cursor::after{content:'▋';animation:blink 1s step-end infinite;color:#4CC0C0}
+
+/* Scroll reveal with variants */
+.sr{opacity:0;transform:translateY(20px);transition:all .8s cubic-bezier(.25,.46,.45,.94)}.sr.v{opacity:1;transform:translateY(0)}
+.sr-left{opacity:0;transform:translateX(-30px);transition:all .8s cubic-bezier(.25,.46,.45,.94)}.sr-left.v{opacity:1;transform:translateX(0)}
+.sr-right{opacity:0;transform:translateX(30px);transition:all .8s cubic-bezier(.25,.46,.45,.94)}.sr-right.v{opacity:1;transform:translateX(0)}
+.sr-scale{opacity:0;transform:scale(.9);transition:all .8s cubic-bezier(.25,.46,.45,.94)}.sr-scale.v{opacity:1;transform:scale(1)}
+.s1{transition-delay:.1s}.s2{transition-delay:.2s}.s3{transition-delay:.3s}.s4{transition-delay:.4s}.s5{transition-delay:.5s}.s6{transition-delay:.6s}.s7{transition-delay:.7s}
+
+/* Card hover with multiple styles */
+.ch{transition:all .35s cubic-bezier(.25,.46,.45,.94)}.ch:hover{transform:translateY(-6px);box-shadow:rgba(39,43,92,.12) 0px 20px 40px -8px,rgba(76,192,192,.08) 0px 8px 20px -6px}
+.ch-scale{transition:all .3s ease}.ch-scale:hover{transform:scale(1.03);box-shadow:rgba(39,43,92,.1) 0px 15px 30px -5px}
+.ch-glow{transition:all .3s ease}.ch-glow:hover{box-shadow:0 0 0 3px rgba(76,192,192,.15),rgba(39,43,92,.1) 0px 10px 25px -5px}
+.ch-tilt{transition:all .3s ease;transform-style:preserve-3d}
+
+/* Magnetic button effect */
+.magnetic{transition:transform .2s ease}
+
+/* Underline animation on links */
+.link-anim{position:relative;text-decoration:none}.link-anim::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:#4CC0C0;transition:width .3s ease}.link-anim:hover::after{width:100%}
+
+/* Gradient border effect */
+.gradient-border{position:relative;background:#fff;border-radius:8px}.gradient-border::before{content:'';position:absolute;inset:-2px;border-radius:10px;background:linear-gradient(135deg,#272B5C,#4CC0C0,#30D9DE);z-index:-1;background-size:200% 200%;animation:gs 4s ease infinite}
+
+/* Glassmorphism card */
+.glass{background:rgba(255,255,255,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(76,192,192,.15)}
+
+/* Cursor glow */
+.cursor-glow{position:fixed;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(76,192,192,.06),transparent 70%);pointer-events:none;z-index:0;transition:transform .15s ease}.custom-cursor{position:fixed;width:32px;height:32px;pointer-events:none;z-index:99999;transition:transform .1s ease;transform:translate(-16px,-16px)}.custom-cursor img{width:32px;height:32px;border-radius:6px}
+
+/* Animated counter */
+.counter{font-variant-numeric:tabular-nums;transition:all .3s ease}
+
+/* Staggered list animation */
+.stagger-list>*{opacity:0;transform:translateY(10px);transition:all .5s ease}.stagger-list.v>*{opacity:1;transform:translateY(0)}
+.stagger-list>*:nth-child(1){transition-delay:.05s}.stagger-list>*:nth-child(2){transition-delay:.1s}.stagger-list>*:nth-child(3){transition-delay:.15s}.stagger-list>*:nth-child(4){transition-delay:.2s}.stagger-list>*:nth-child(5){transition-delay:.25s}.stagger-list>*:nth-child(6){transition-delay:.3s}.stagger-list>*:nth-child(7){transition-delay:.35s}.stagger-list>*:nth-child(8){transition-delay:.4s}
+
+/* Parallax layer */
+.parallax{transition:transform .1s linear}
+
+/* Smooth underline reveal */
+.reveal-line{position:relative;display:inline-block}.reveal-line::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:#4CC0C0;transform:scaleX(0);transform-origin:right;transition:transform .4s ease}.reveal-line.v::after{transform:scaleX(1);transform-origin:left}
+
+/* Dot pattern overlay */
+.dots-overlay{position:relative}.dots-overlay::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(76,192,192,.07) 1px,transparent 1px);background-size:16px 16px;pointer-events:none;border-radius:inherit}
+
+/* Tags */
+.tag{display:inline-block;padding:5px 14px;font-size:.7rem;font-weight:600;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em;border:1.5px solid;border-radius:4px;transition:all .3s ease}.tag:hover{transform:translateY(-2px)}
+.tb{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;font-size:.72rem;font-weight:500;font-family:'JetBrains Mono',monospace;border:1.5px solid;border-radius:4px;transition:all .3s ease}.tb:hover{transform:translateY(-1px)}
+
+/* Progress bar */
+.progress-bar{position:fixed;top:0;left:0;height:3px;z-index:9999;transition:width .15s ease}
+
+/* Nav */
+nav{backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:all .3s ease}
+nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
+
+/* Code blocks */
+.code{background:#1F0A32;color:#e8edf2;border-left:4px solid #4CC0C0;padding:20px 24px;font-family:'JetBrains Mono',monospace;font-size:.8rem;line-height:1.8;border-radius:6px;transition:all .3s ease}.code:hover{box-shadow:rgba(76,192,192,.1) 0px 8px 25px}
+.code-inline{background:#f4f7fa;color:#272B5C;padding:2px 8px;font-family:'JetBrains Mono',monospace;font-size:.82rem;border-radius:4px;border:1px solid #e8edf2;transition:all .2s ease}.code-inline:hover{background:#edf1f6;border-color:#4CC0C0}
+.cmd{background:#1F0A32;color:#30D9DE;padding:12px 20px;font-family:'JetBrains Mono',monospace;font-size:.85rem;border-radius:6px;display:flex;align-items:center;gap:8px;transition:all .3s ease;cursor:pointer;position:relative;user-select:all}.cmd:hover{transform:translateX(4px);box-shadow:rgba(76,192,192,.15) 0px 4px 15px;border:1px solid rgba(76,192,192,.3)}.cmd:active{transform:scale(.98)}
+.cmd::before{content:'$';color:#64748d}
+.cmd::after{content:'cliquer pour copier';position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:.6rem;color:#64748d;opacity:.5;transition:all .3s ease;pointer-events:none}
+.cmd:hover::after{opacity:1;color:#4CC0C0}
+.cmd.copied::after{content:'copié !';color:#30D9DE;opacity:1;font-weight:600}
+.cmd.copied{box-shadow:0 0 0 2px rgba(76,192,192,.3),rgba(76,192,192,.15) 0px 4px 15px}
+
+/* Cards */
+.card{background:#fff;border:1px solid #e8edf2;border-radius:8px;box-shadow:rgba(39,43,92,.06) 0px 2px 5px,rgba(0,0,0,.03) 0px 1px 3px;transition:all .35s ease}
+.card-accent{background:#fff;border:1.5px solid #4CC0C0;border-radius:8px;box-shadow:rgba(76,192,192,.08) 0px 4px 12px;transition:all .35s ease}
+.card-green{background:#fff;border:1.5px solid #30D9DE;border-radius:8px;box-shadow:rgba(48,217,222,.08) 0px 4px 12px;transition:all .35s ease}
+.card-orange{background:#fff;border:1.5px solid #f97316;border-radius:8px;box-shadow:rgba(249,115,22,.06) 0px 4px 12px;transition:all .35s ease}
+.card-light{background:#fff;border:1px solid #e8edf2;border-radius:6px;transition:all .3s ease}.card-light:hover{border-color:#4CC0C0;box-shadow:rgba(76,192,192,.06) 0px 4px 12px}
+
+/* Step numbers */
+.step{width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;flex-shrink:0;border:1.5px solid;border-radius:50%;transition:all .3s ease}.step:hover{transform:scale(1.1)}
+
+/* Section counter */
+.sc{position:fixed;bottom:16px;right:16px;z-index:50;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:#64748d;background:#fff;border:1px solid #e8edf2;padding:4px 10px;border-radius:4px;box-shadow:rgba(39,43,92,.06) 0px 2px 5px;transition:all .3s ease}
+
+/* Terminal */
+.terminal{background:#1F0A32;border-radius:8px;overflow:hidden;transition:all .4s ease}.terminal:hover{box-shadow:rgba(31,10,50,.3) 0px 20px 40px -10px,rgba(76,192,192,.08) 0px 0px 0px 1px}
+.terminal-bar{background:#272B5C;padding:8px 16px;display:flex;align-items:center;gap:6px}
+.terminal-dot{width:10px;height:10px;border-radius:50%;transition:all .2s ease}
+.terminal:hover .terminal-dot:nth-child(1){transform:scale(1.2)}.terminal:hover .terminal-dot:nth-child(2){transform:scale(1.2);transition-delay:.05s}.terminal:hover .terminal-dot:nth-child(3){transform:scale(1.2);transition-delay:.1s}
+.terminal-body{padding:20px 24px;font-family:'JetBrains Mono',monospace;font-size:.8rem;line-height:1.9;color:#e8edf2}
+.terminal-prompt{color:#30D9DE}
+.terminal-cmd{color:#fff}
+.terminal-output{color:#94a3b8}
+.terminal-accent{color:#4CC0C0}
+
+/* Emoji */
+.emoji{filter:drop-shadow(1px 1px 0 rgba(39,43,92,.1));transition:transform .3s ease}.emoji:hover{transform:scale(1.2) rotate(-5deg)}
+
+/* Smooth scroll indicator */
+.scroll-hint{animation:bounceSubtle 2.5s ease-in-out infinite}
+
+/* Noise texture overlay */
+.noise{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;opacity:.015;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+</style>
+</head>
+
+
+<body>
+
+<div class="progress-bar gradient-bg" id="pb"></div>
+<div class="sc" id="sc">1 / 70</div>
+<div class="noise"></div>
+<div class="cursor-glow" id="cg"></div>
+<div class="custom-cursor" id="cc"><img src="logo-denem.jpeg" alt=""></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 border-b border-sol-lightgray" style="box-shadow:rgba(50,50,93,.06) 0px 2px 5px">
+<div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+    <div class="flex items-center gap-3">
+        <img src="logo-denem.jpeg" alt="DENEM" class="w-7 h-7 rounded">
+        <span class="font-space font-bold text-sm">DENEM Academy</span>
+        <span class="text-sol-gray text-xs">/</span>
+        <span class="text-sol-gray text-xs font-mono">Séance 05</span>
+    </div>
+    <span class="tag border-sol-accent text-sol-accent">Acte 2 — Lancer</span>
+</div>
+</nav>
+
+<!-- ============================================================ -->
+<!-- HERO -->
+<!-- ============================================================ -->
+
+<section data-s="1" class="min-h-screen flex items-center justify-center relative pt-14 overflow-hidden">
+<div class="absolute top-24 left-16 w-14 h-14 border-2 border-sol-accent/15 rounded-lg rotate-12 animate-float hidden lg:block"></div>
+<div class="absolute bottom-36 right-20 w-10 h-10 border-2 border-sol-navy/10 rounded-full animate-float-slow hidden lg:block"></div>
+<div class="absolute inset-0 dots-overlay opacity-50"></div>
+<div class="max-w-3xl mx-auto px-4 text-center relative z-10">
+    <div class="sr"><span class="tag border-sol-accent text-sol-accent pulse-ring">Séance 5 sur 24 — Acte 2</span></div>
+    <h1 class="sr s1 font-space font-bold text-5xl sm:text-6xl md:text-7xl leading-[.92] mt-6 mb-6">
+        <span class="gradient-text">Ton étude de marché.</span><br><span class="text-sol-gray text-3xl sm:text-4xl">Avant de construire, tu comprends.</span>
+    </h1>
+    <p class="sr s2 text-lg text-sol-gray max-w-xl mx-auto leading-relaxed mb-8">Bienvenue dans l'Acte 2. À partir de maintenant, tu construis ton business. Et la première chose à faire — avant le site, avant le blog, avant LinkedIn — c'est de comprendre ton marché. Qui sont tes concurrents, ce qu'ils vendent, à quel prix, et où sont les trous. C'est ce qu'on fait dans cette séance.</p>
+    <div class="sr s3 tb border-sol-accent text-sol-accent mx-auto animate-glow"><span class="w-1.5 h-1.5 bg-sol-accent rounded-full"></span>40-50 min</div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- POURQUOI C'EST LA PREMIÈRE SÉANCE -->
+<!-- ============================================================ -->
+
+<section data-s="2" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Pourquoi c'est la première séance de l'Acte 2.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed mb-4">Parce que si tu construis ton site, ton blog, ton tunnel sans savoir à qui tu parles, ce que les autres font, et où sont les opportunités — tu construis dans le vide.</p>
+    <p class="text-sol-gray leading-relaxed">Tout ce que tu fais après dépend de cette séance : ton positionnement (séance 7), ton site (séance 8), ton blog (séance 9), tes posts LinkedIn (séance 12), ta prospection (séance 15). Si ton étude de marché est solide, tout le reste tombe en place.</p>
+</div>
+</section>
+
+<section data-s="3" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-green p-6">
+        <h3 class="font-bold text-lg mb-3">Ce que tu vas avoir à la fin de cette séance</h3>
+        <div class="text-sol-gray text-sm space-y-2">
+            <p>→ Un tableau comparatif de tes 10 concurrents (offres, prix, forces, faiblesses)</p>
+            <p>→ Une analyse de ce que les gens cherchent vraiment</p>
+            <p>→ Un benchmark des plateformes freelance</p>
+            <p>→ Ton profil client idéal (secteur, taille, décideur, problème, budget)</p>
+            <p>→ Les trous dans le marché — ce que personne ne fait</p>
+            <p>→ Ton positionnement, tes prix, tes mots-clés</p>
+            <p>→ <strong>Le tout dans des fichiers HTML visuels que tu gardes</strong></p>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- COMMENT ÇA VA SE PASSER -->
+<!-- ============================================================ -->
+
+<section data-s="4" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Comment ça va se passer.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed mb-4">6 phases. À chaque phase, tu copies un prompt, tu le personnalises avec tes infos, tu le colles dans Claude Code, et il fait le boulot. À la fin de chaque phase, Claude Code te génère un fichier HTML avec les résultats.</p>
+    <p class="text-sol-gray leading-relaxed">C'est une recette. Tu suis les étapes, tu ajustes les ingrédients (tes infos), et tu obtiens ton étude de marché.</p>
+</div>
+</section>
+
+<section data-s="5" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Les 6 phases</h3>
+    <div class="space-y-3">
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="step border-sol-accent text-sol-accent">1</span><span class="font-bold text-sm">Tes infos</span></div><p class="text-sol-gray text-xs mt-1">Tu personnalises ton profil — l'étude est adaptée à TON projet</p></div>
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="step border-sol-accent text-sol-accent">2</span><span class="font-bold text-sm">Analyse des concurrents</span></div><p class="text-sol-gray text-xs mt-1">Claude Code scrape et analyse 10 concurrents</p></div>
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="step border-sol-accent text-sol-accent">3</span><span class="font-bold text-sm">Analyse de la demande</span></div><p class="text-sol-gray text-xs mt-1">Qu'est-ce que les gens cherchent et ne trouvent pas</p></div>
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="step border-sol-accent text-sol-accent">4</span><span class="font-bold text-sm">Benchmark plateformes</span></div><p class="text-sol-gray text-xs mt-1">Ce qui se vend sur Malt, Upwork, etc.</p></div>
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="step border-sol-accent text-sol-accent">5</span><span class="font-bold text-sm">Profil client idéal</span></div><p class="text-sol-gray text-xs mt-1">Ta cible précise (secteur, taille, décideur, problème)</p></div>
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="step border-sol-accent text-sol-accent">6</span><span class="font-bold text-sm">Positionnement final</span></div><p class="text-sol-gray text-xs mt-1">Tes trous dans le marché, ton offre, tes prix, tes mots-clés</p></div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PHASE 0 : TES INFOS -->
+<!-- ============================================================ -->
+
+<section data-s="6" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="flex items-center gap-3 mb-6"><span class="step gradient-bg text-white">0</span><h2 class="font-space font-bold text-3xl">D'abord, tes infos.</h2></div>
+    <p class="text-sol-gray text-lg leading-relaxed mb-4">Avant de lancer quoi que ce soit, tu dois personnaliser les prompts. Remplace les variables entre crochets <span class="code-inline">[...]</span> par tes infos. C'est ce qui fait que l'étude sera adaptée à TON projet, pas un truc générique.</p>
+</div>
+</section>
+
+<section data-s="7" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Tes variables</h3>
+    <p class="text-sol-gray text-sm mb-4">Prends 2 minutes pour répondre à ces questions. Tu vas réutiliser ces réponses dans chaque prompt.</p>
+    <div class="space-y-3">
+        <div class="card p-4"><div class="font-bold text-sm mb-1"><span class="code-inline">[TON_PROJET]</span></div><p class="text-sol-gray text-xs">Freelance expert IA ? Agence d'automatisation ? Consultant IA ? Formateur IA ?</p><p class="text-xs mt-1 italic" style="color:#4CC0C0">Exemple : "freelance expert IA spécialisé en automatisation pour PME"</p></div>
+        <div class="card p-4"><div class="font-bold text-sm mb-1"><span class="code-inline">[TES_SERVICES]</span></div><p class="text-sol-gray text-xs">Qu'est-ce que tu veux vendre ? Audit IA, chatbots, automatisation CRM, agents vocaux... ?</p><p class="text-xs mt-1 italic" style="color:#4CC0C0">Exemple : "audit IA, chatbot SAV, assistant email, agent vocal, automatisation CRM"</p></div>
+        <div class="card p-4"><div class="font-bold text-sm mb-1"><span class="code-inline">[TA_CIBLE]</span></div><p class="text-sol-gray text-xs">Qui tu veux comme clients ? Restaurants, cabinets comptables, agences marketing, e-commerce... ?</p><p class="text-xs mt-1 italic" style="color:#4CC0C0">Exemple : "TPE/PME de 5-50 salariés dans les services"</p></div>
+        <div class="card p-4"><div class="font-bold text-sm mb-1"><span class="code-inline">[TA_ZONE]</span></div><p class="text-sol-gray text-xs">Tu cibles où ? Une ville, une région, la France entière, international ?</p><p class="text-xs mt-1 italic" style="color:#4CC0C0">Exemple : "Lyon et sa région" ou "France entière"</p></div>
+        <div class="card p-4"><div class="font-bold text-sm mb-1"><span class="code-inline">[TON_BUDGET_CIBLE]</span></div><p class="text-sol-gray text-xs">Combien tu veux facturer ? Quelle fourchette de prix ?</p><p class="text-xs mt-1 italic" style="color:#4CC0C0">Exemple : "1 500 à 8 000€ par projet"</p></div>
+    </div>
+</div>
+</section>
+
+<section data-s="8" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-orange p-5">
+        <h4 class="font-bold mb-2">Si tu sais pas encore</h4>
+        <p class="text-sol-gray text-sm">C'est normal. Mets ce qui te parle le plus pour l'instant. L'étude de marché va justement t'aider à affiner. Tu pourras toujours relancer les prompts avec des variables différentes après.</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PHASE 1 : CONCURRENTS -->
+<!-- ============================================================ -->
+
+<section data-s="9" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="flex items-center gap-3 mb-6"><span class="step gradient-bg text-white">1</span><h2 class="font-space font-bold text-3xl">Phase 1 — Analyser les concurrents.</h2></div>
+    <p class="text-sol-gray text-lg leading-relaxed">Claude Code va naviguer sur Google, trouver tes 10 principaux concurrents, visiter leurs sites un par un, et extraire tout ce qui est utile.</p>
+</div>
+</section>
+
+<section data-s="10" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Le prompt — copie et personnalise</h3>
+    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">Je veux que tu fasses une analyse concurrentielle complète pour mon projet : [TON_PROJET]. Je cible [TA_CIBLE] dans la zone [TA_ZONE].<br><br>Étape 1 : Cherche sur Google les 10 premiers résultats pour ces requêtes :<br>- "[TON_PROJET] [TA_ZONE]"<br>- "consultant IA PME [TA_ZONE]"<br>- "automatisation IA entreprise [TA_ZONE]"<br>- "expert IA freelance [TA_ZONE]"<br><br>Étape 2 : Pour chaque concurrent trouvé, visite leur site et extrais :<br>- Nom et URL du site<br>- Leurs services (liste complète)<br>- Leurs prix (si affichés)<br>- Leur positionnement (comment ils se présentent en 1 phrase)<br>- Leur note Google et nombre d'avis<br>- Leurs forces (ce qu'ils font bien)<br>- Leurs faiblesses (ce qui manque, ce qui est mal fait)<br>- Présence LinkedIn (nombre d'abonnés, fréquence de publication)<br><br>Étape 3 : Génère un fichier HTML visuel et propre avec :<br>- Un tableau comparatif de tous les concurrents<br>- Un résumé des tendances (ce que tout le monde fait, ce que personne ne fait)<br>- Les opportunités identifiées<br>Sauvegarde le fichier sous le nom "01-concurrents.html"</div>
+</section>
+
+<section data-s="11" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Exemple avec les variables remplies</h3>
+    <div class="code border-sol-accent" style="line-height:1.7">
+        <div style="color:#4CC0C0" class="mb-2 font-bold">// Exemple pour un freelance IA à Lyon</div>
+        <div class="text-gray-400">
+            [TON_PROJET] → freelance expert IA spécialisé en automatisation pour PME<br>
+            [TA_CIBLE] → TPE/PME de 5-50 salariés dans les services<br>
+            [TA_ZONE] → Lyon et sa région<br><br>
+            Requêtes Google :<br>
+            → "freelance expert IA Lyon"<br>
+            → "consultant IA PME Lyon"<br>
+            → "automatisation IA entreprise Lyon"<br>
+            → "expert IA freelance Lyon"
+        </div>
+    </div>
+</div>
+</section>
+
+<section data-s="12" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Ce que Claude Code fait</h3>
+    <div class="space-y-3">
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">1</div><p class="text-sol-gray text-sm">Il lance les recherches Google</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">2</div><p class="text-sol-gray text-sm">Il visite chaque site concurrent avec Playwright (automatisation de navigateur)</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">3</div><p class="text-sol-gray text-sm">Il extrait les infos de chaque page (services, prix, positionnement)</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">4</div><p class="text-sol-gray text-sm">Il cherche les avis Google de chaque concurrent</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">5</div><p class="text-sol-gray text-sm">Il compile tout dans un HTML propre avec un tableau et des insights</p></div>
+    </div>
+    <p class="text-sol-gray text-sm mt-4 italic">Toi tu fais rien. Tu copies le prompt, tu attends, tu ouvres le fichier HTML.</p>
+</div>
+</section>
+
+<section data-s="13" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-green p-5">
+        <h4 class="font-bold mb-2">Le résultat : 01-concurrents.html</h4>
+        <p class="text-sol-gray text-sm">Un fichier HTML avec un beau tableau comparatif. Tu l'ouvres dans ton navigateur, tu vois tous tes concurrents côte à côte : ce qu'ils font, à quel prix, leurs forces et leurs faiblesses. C'est la base de tout.</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PHASE 2 : DEMANDE -->
+<!-- ============================================================ -->
+
+<section data-s="14" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="flex items-center gap-3 mb-6"><span class="step gradient-bg text-white">2</span><h2 class="font-space font-bold text-3xl">Phase 2 — Analyser la demande.</h2></div>
+    <p class="text-sol-gray text-lg leading-relaxed">Maintenant que tu sais ce que les concurrents proposent, on regarde ce que les gens cherchent. Quels mots-clés ils tapent, quels problèmes ils ont, qu'est-ce qu'ils trouvent pas.</p>
+</div>
+</section>
+
+<section data-s="15" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Le prompt — copie et personnalise</h3>
+    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">Je veux analyser la demande réelle pour mon projet : [TON_PROJET]. Je cible [TA_CIBLE] dans [TA_ZONE].<br><br>Étape 1 — Mots-clés Google : Cherche les mots-clés que les gens tapent sur Google en rapport avec [TES_SERVICES]. Pour chaque mot-clé, estime le volume de recherche et la concurrence.<br><br>Étape 2 — Questions fréquentes : Cherche sur Google "People Also Ask", Reddit, forums, et Quora les questions que les dirigeants de [TA_CIBLE] posent sur l'IA et l'automatisation.<br><br>Étape 3 — LinkedIn : Cherche les posts LinkedIn les plus engagés sur les sujets "IA pour PME", "automatisation entreprise", "[TES_SERVICES]". Note les sujets qui marchent et ceux qui marchent pas.<br><br>Étape 4 : Génère un fichier HTML avec :<br>- Top 20 mots-clés (volume, concurrence, opportunité)<br>- Top 10 questions que les gens posent<br>- Top 5 sujets LinkedIn qui marchent<br>- Les "trous" : ce que les gens cherchent et ne trouvent pas<br>Sauvegarde sous "02-demande.html"</div>
+</section>
+
+<section data-s="16" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-green p-5">
+        <h4 class="font-bold mb-2">Le résultat : 02-demande.html</h4>
+        <p class="text-sol-gray text-sm">Tu sais maintenant ce que les gens cherchent. Ces mots-clés tu les réutilises pour ton blog SEO (séance 9) et tes posts LinkedIn (séance 12). Les questions fréquentes deviennent tes contenus. Les trous deviennent ton positionnement.</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PHASE 3 : PLATEFORMES -->
+<!-- ============================================================ -->
+
+<section data-s="17" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="flex items-center gap-3 mb-6"><span class="step gradient-bg text-white">3</span><h2 class="font-space font-bold text-3xl">Phase 3 — Benchmark plateformes.</h2></div>
+    <p class="text-sol-gray text-lg leading-relaxed">On regarde ce qui se vend vraiment sur les plateformes freelance. Pas ce que les concurrents disent qu'ils font — ce qui se vend pour de vrai, à quel prix, avec quels avis.</p>
+</div>
+</section>
+
+<section data-s="18" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Le prompt</h3>
+    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">Je veux analyser ce qui se vend sur les plateformes freelance pour [TES_SERVICES].<br><br>Étape 1 — Malt : Cherche les profils qui proposent des services similaires à [TES_SERVICES] sur malt.fr. Pour les 10 premiers : tarif journalier, services proposés, note, nombre de missions, ce qui manque dans leur offre.<br><br>Étape 2 — Upwork : Même chose sur upwork.com pour les freelances qui vendent [TES_SERVICES]. Tarifs, services, avis, forces, faiblesses.<br><br>Étape 3 — Fiverr : Pareil sur fiverr.com. Note les prix les plus bas et les plus hauts pour des services similaires.<br><br>Étape 4 : Génère un fichier HTML avec :<br>- Tableau comparatif des 3 plateformes (nombre de freelances, tarifs moyens, services les plus vendus)<br>- Les services les plus demandés vs les moins proposés<br>- Les fourchettes de prix du marché<br>- Les opportunités (ce qui manque, ce qui est mal fait)<br>Sauvegarde sous "03-plateformes.html"</div>
+</section>
+
+<section data-s="19" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-green p-5">
+        <h4 class="font-bold mb-2">Le résultat : 03-plateformes.html</h4>
+        <p class="text-sol-gray text-sm">Tu vois les vrais prix du marché. Pas les prix que les concurrents affichent sur leur site — les prix que les gens paient vraiment. C'est ça qui va t'aider à fixer tes tarifs.</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PHASE 4 : CLIENT IDÉAL -->
+<!-- ============================================================ -->
+
+<section data-s="20" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="flex items-center gap-3 mb-6"><span class="step gradient-bg text-white">4</span><h2 class="font-space font-bold text-3xl">Phase 4 — Ton client idéal.</h2></div>
+    <p class="text-sol-gray text-lg leading-relaxed">Maintenant que tu connais le marché (concurrents + demande + plateformes), on définit précisément qui tu vises.</p>
+</div>
+</section>
+
+<section data-s="21" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Le prompt</h3>
+    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">À partir de l'analyse des concurrents (01-concurrents.html), de la demande (02-demande.html) et des plateformes (03-plateformes.html), définis mon profil client idéal.<br><br>Mon projet : [TON_PROJET]<br>Mes services : [TES_SERVICES]<br>Ma zone : [TA_ZONE]<br>Mon budget cible : [TON_BUDGET_CIBLE]<br><br>Pour le profil client idéal, détaille :<br>- Secteur d'activité (2-3 secteurs prioritaires avec justification)<br>- Taille de l'entreprise (nombre de salariés, CA approximatif)<br>- Le décideur (qui prend la décision d'achat : gérant, DG, DAF, DSI...)<br>- Ses 3 plus gros problèmes que l'IA peut résoudre<br>- Son budget probable pour des services IA<br>- Où le trouver (LinkedIn, Google, événements, réseaux...)<br>- Ce qui le convaincrait de bosser avec toi (arguments clés)<br><br>Génère un fichier HTML visuel avec le profil complet, illustré et structuré.<br>Sauvegarde sous "04-client-ideal.html"</div>
+</section>
+
+<section data-s="22" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-green p-5">
+        <h4 class="font-bold mb-2">Le résultat : 04-client-ideal.html</h4>
+        <p class="text-sol-gray text-sm">Tu sais exactement qui tu cibles. Quand tu crées ton site (séance 8), tu parles à cette personne. Quand tu prospectes (séance 15), tu cherches cette personne. Plus de "je vends à tout le monde" — tu as une cible précise.</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PHASE 5 : TROUS DANS LE MARCHÉ -->
+<!-- ============================================================ -->
+
+<section data-s="23" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="flex items-center gap-3 mb-6"><span class="step gradient-bg text-white">5</span><h2 class="font-space font-bold text-3xl">Phase 5 — Les trous dans le marché.</h2></div>
+    <p class="text-sol-gray text-lg leading-relaxed">La phase la plus stratégique. On croise toutes les données pour trouver ce que personne ne fait — et c'est là que tu te positionnes.</p>
+</div>
+</section>
+
+<section data-s="24" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Le prompt</h3>
+    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">À partir de toutes les analyses précédentes (01-concurrents.html, 02-demande.html, 03-plateformes.html, 04-client-ideal.html), identifie les trous dans le marché.<br><br>Mon projet : [TON_PROJET]<br>Mes services : [TES_SERVICES]<br><br>Analyse :<br>1. Ce que TOUS les concurrents font → c'est le standard, je dois le proposer aussi<br>2. Ce que les concurrents font MAL → c'est l'opportunité d'être meilleur<br>3. Ce que PERSONNE ne fait → c'est mon positionnement différenciant<br>4. Ce que les clients DEMANDENT mais ne TROUVENT PAS → c'est l'opportunité la plus grande<br>5. Les segments de clientèle IGNORÉS par les concurrents → c'est ma niche potentielle<br><br>Pour chaque trou identifié, propose :<br>- Le service que je pourrais créer<br>- Le prix que je pourrais facturer<br>- L'argument de vente en 1 phrase<br><br>Génère un fichier HTML visuel avec les trous classés par opportunité (du plus grand au plus petit).<br>Sauvegarde sous "05-trous-marche.html"</div>
+</section>
+
+<section data-s="25" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-green p-5">
+        <h4 class="font-bold mb-2">Le résultat : 05-trous-marche.html</h4>
+        <p class="text-sol-gray text-sm">Tu vois noir sur blanc où sont les opportunités. "Tous les consultants IA vendent de la formation. Personne ne connecte l'IA aux outils existants du client." Boom — c'est ton angle.</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PHASE 6 : POSITIONNEMENT FINAL -->
+<!-- ============================================================ -->
+
+<section data-s="26" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="flex items-center gap-3 mb-6"><span class="step gradient-bg text-white">6</span><h2 class="font-space font-bold text-3xl">Phase 6 — Ton positionnement final.</h2></div>
+    <p class="text-sol-gray text-lg leading-relaxed">On compile tout. À la fin de cette phase, tu as ton positionnement, tes prix, tes messages, et tes mots-clés. Tu sais exactement qui tu es sur le marché.</p>
+</div>
+</section>
+
+<section data-s="27" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Le prompt</h3>
+    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">À partir de toutes les analyses (01 à 05), crée mon document de positionnement final.<br><br>Mon projet : [TON_PROJET]<br>Mes services : [TES_SERVICES]<br>Ma cible : [TA_CIBLE]<br>Ma zone : [TA_ZONE]<br>Mon budget cible : [TON_BUDGET_CIBLE]<br><br>Le document doit contenir :<br><br>1. MON POSITIONNEMENT<br>- Ma phrase de positionnement (1 phrase qui résume ce que je fais et pour qui)<br>- Ce qui me différencie des concurrents (3 points max)<br>- Mon "pourquoi moi" en 3 phrases<br><br>2. MON OFFRE<br>- La liste de mes services avec description courte<br>- Ma grille tarifaire (prix basés sur le benchmark du marché)<br>- Mon service d'entrée (le plus facile à vendre)<br>- Mon service premium (le plus rentable)<br><br>3. MA CIBLE<br>- Résumé du profil client idéal<br>- Les 3 problèmes que je résous<br>- Les arguments qui convertissent<br><br>4. MES MOTS-CLÉS<br>- Top 10 mots-clés pour le SEO (blog, séance 9)<br>- Top 5 sujets pour LinkedIn (posts, séance 12)<br>- Top 3 angles pour la prospection (messages, séance 15)<br><br>5. MON PLAN D'ACTION<br>- Les 3 premières actions à faire cette semaine<br><br>Génère un fichier HTML complet, visuel, professionnel. C'est mon document de référence pour toute la suite de la formation.<br>Sauvegarde sous "06-positionnement.html"</div>
+</section>
+
+<section data-s="28" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-accent p-6">
+        <h4 class="font-bold mb-3">Le résultat : 06-positionnement.html</h4>
+        <p class="text-sol-gray text-sm leading-relaxed">C'est TON document. Celui que tu gardes ouvert à côté de toi pour toute la suite. Quand tu crées ton site → tu reprends le positionnement. Quand tu écris un post LinkedIn → tu reprends les mots-clés. Quand tu prospectes → tu reprends les arguments. Tout découle de là.</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- RÉCAP DES 6 FICHIERS -->
+<!-- ============================================================ -->
+
+<section data-s="29" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Tes 6 fichiers à la fin de la séance.</h2>
+    <div class="code border-sol-accent" style="line-height:1.7">
+        <div style="color:#4CC0C0" class="mb-2 font-bold">// Tes livrables</div>
+        <div class="text-gray-400">
+            01-concurrents.html      → Tableau comparatif de 10 concurrents<br>
+            02-demande.html          → Mots-clés, questions, tendances LinkedIn<br>
+            03-plateformes.html      → Benchmark Malt, Upwork, Fiverr<br>
+            04-client-ideal.html     → Profil client idéal détaillé<br>
+            05-trous-marche.html     → Opportunités classées par potentiel<br>
+            06-positionnement.html   → Ton positionnement complet et final
+        </div>
+    </div>
+    <p class="text-sol-gray text-sm mt-4">6 fichiers HTML. Visuels, structurés, personnalisés pour ton projet. Tu les gardes, tu les références pour toute la suite de la formation.</p>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- COMMENT ÇA S'ENCHAÎNE -->
+<!-- ============================================================ -->
+
+<section data-s="30" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Comment ça s'enchaîne avec la suite.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed mb-4">Tout ce que tu fais après dans l'Acte 2 utilise les résultats de cette séance.</p>
+</div>
+</section>
+
+<section data-s="31" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="space-y-3">
+        <div class="card-light p-4 ch"><div class="flex items-start gap-3"><span class="font-mono text-xs" style="color:#4CC0C0;min-width:50px">S6</span><div><span class="font-bold text-sm">Ton QG Cowork</span><p class="text-sol-gray text-xs mt-1">Tu organises tout ton business → basé sur ton positionnement</p></div></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-start gap-3"><span class="font-mono text-xs" style="color:#4CC0C0;min-width:50px">S7</span><div><span class="font-bold text-sm">Identité de marque</span><p class="text-sol-gray text-xs mt-1">Logo, charte graphique → alignés avec ton positionnement</p></div></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-start gap-3"><span class="font-mono text-xs" style="color:#4CC0C0;min-width:50px">S8</span><div><span class="font-bold text-sm">Ton site web</span><p class="text-sol-gray text-xs mt-1">Le contenu parle à ton client idéal, les arguments viennent du positionnement</p></div></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-start gap-3"><span class="font-mono text-xs" style="color:#4CC0C0;min-width:50px">S9</span><div><span class="font-bold text-sm">Blog SEO/GEO</span><p class="text-sol-gray text-xs mt-1">Les mots-clés viennent de la phase 2 → articles ciblés</p></div></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-start gap-3"><span class="font-mono text-xs" style="color:#4CC0C0;min-width:50px">S12</span><div><span class="font-bold text-sm">Posts LinkedIn</span><p class="text-sol-gray text-xs mt-1">Les sujets qui marchent viennent de la phase 2</p></div></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-start gap-3"><span class="font-mono text-xs" style="color:#4CC0C0;min-width:50px">S15</span><div><span class="font-bold text-sm">Prospection</span><p class="text-sol-gray text-xs mt-1">Ta cible est définie, tes arguments sont prêts, tes messages sont personnalisés</p></div></div></div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CONSEILS -->
+<!-- ============================================================ -->
+
+<section data-s="32" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Quelques conseils.</h2>
+</div>
+</section>
+
+<section data-s="33" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold mb-2">Lance les phases une par une</h4><p class="text-sol-gray text-sm">Fais pas tout d'un coup. Lance la phase 1, vérifie le résultat, ajuste si besoin, puis passe à la phase 2. Chaque phase utilise les résultats de la précédente.</p></div></div></section>
+
+<section data-s="34" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold mb-2">Vérifie les résultats</h4><p class="text-sol-gray text-sm">Claude Code peut se tromper sur des détails (un prix, un nombre d'avis). Ouvre les HTML, relis, vérifie les chiffres qui te semblent bizarres. C'est ton étude — elle doit être fiable.</p></div></div></section>
+
+<section data-s="35" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold mb-2">Personnalise les prompts</h4><p class="text-sol-gray text-sm">Les prompts sont des bases. Rajoute des détails si tu veux. "Analyse aussi leurs pages LinkedIn en détail" ou "Regarde aussi les avis Trustpilot". Plus tu donnes de contexte, meilleur est le résultat.</p></div></div></section>
+
+<section data-s="36" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold mb-2">Tu peux relancer</h4><p class="text-sol-gray text-sm">Si un résultat te plaît pas, relance le prompt avec plus de détails ou une direction différente. C'est pas gravé dans le marbre — itère jusqu'à ce que t'es satisfait.</p></div></div></section>
+
+<section data-s="37" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-green p-5 ch"><h4 class="font-bold mb-2">Garde tes 6 fichiers</h4><p class="text-sol-gray text-sm">Mets-les dans un dossier "Étude de marché" sur ton Drive. Tu vas les rouvrir régulièrement pendant toute la formation. C'est ta boussole.</p></div></div></section>
+
+<!-- ============================================================ -->
+<!-- LES OUTILS UTILISÉS -->
+<!-- ============================================================ -->
+
+<section data-s="38" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Les outils utilisés.</h2>
+</div>
+</section>
+
+<section data-s="39" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card p-6 border-l-4 border-l-sol-accent">
+        <div class="text-sol-gray text-sm space-y-3">
+            <p><strong style="color:#4CC0C0">Claude Code</strong> → c'est lui qui fait tout. Il lance les recherches, navigue les sites, extrait les données, compile les résultats, génère les HTML.</p>
+            <p><strong>Playwright</strong> → Claude Code utilise Playwright (automatisation de navigateur) pour visiter les sites des concurrents et extraire les infos. Tu installes rien — Claude Code gère.</p>
+            <p><strong>Chrome / Web</strong> → Claude Code accède au web pour les recherches Google, les profils LinkedIn, les plateformes freelance.</p>
+            <p><strong>HTML</strong> → les résultats sont générés en HTML. Des fichiers propres, visuels, que tu ouvres dans ton navigateur.</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LES LIMITES -->
+<!-- ============================================================ -->
+
+<section data-s="40" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Les limites à connaître.</h2>
+</div>
+</section>
+
+<section data-s="41" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-orange p-6 ch"><h4 class="font-bold mb-2">Le scraping peut être bloqué</h4><p class="text-sol-gray text-sm">Certains sites bloquent le scraping automatique. Si Claude Code arrive pas à accéder à un site, c'est normal. Il te le dira et passera au suivant.</p></div></div></section>
+
+<section data-s="42" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-orange p-6 ch"><h4 class="font-bold mb-2">Les prix sont pas toujours affichés</h4><p class="text-sol-gray text-sm">Beaucoup de concurrents affichent pas leurs prix sur leur site. Claude Code mettra "prix non affiché" — c'est une info en soi (ça veut dire qu'ils veulent qu'on les contacte).</p></div></div></section>
+
+<section data-s="43" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-orange p-6 ch"><h4 class="font-bold mb-2">Les volumes de recherche sont des estimations</h4><p class="text-sol-gray text-sm">Claude Code donne des estimations de volume de recherche, pas des chiffres exacts. C'est suffisant pour se positionner, mais c'est pas Google Keyword Planner.</p></div></div></section>
+
+<!-- ============================================================ -->
+<!-- CE QU'IL FAUT RETENIR -->
+<!-- ============================================================ -->
+
+<section data-s="44" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl mb-6">Ce qu'il faut retenir.</h2>
+    <div class="space-y-3">
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">6 phases, 6 prompts, 6 fichiers HTML</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Tu personnalises chaque prompt avec tes variables</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Claude Code fait le boulot — tu vérifies et tu ajustes</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Tu repars avec ton positionnement, tes prix, tes mots-clés, ta cible</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Tout ce qui suit dans l'Acte 2 s'appuie sur ces résultats</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">C'est la séance la plus stratégique de la formation</span></div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHEATSHEET -->
+<!-- ============================================================ -->
+
+<section data-s="45" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-2xl mb-6">Cheatsheet.</h2>
+    <div class="code border-sol-accent" style="line-height:1.7">
+        <div style="color:#4CC0C0" class="mb-3 font-bold">// Étude de marché — Cheatsheet</div>
+        <div class="text-gray-400">
+            VARIABLES À REMPLIR<br>
+            [TON_PROJET] → freelance, agence, consultant...<br>
+            [TES_SERVICES] → audit, chatbot, CRM, vocal...<br>
+            [TA_CIBLE] → secteur, taille, type d'entreprise<br>
+            [TA_ZONE] → ville, région, pays<br>
+            [TON_BUDGET_CIBLE] → fourchette de prix<br>
+            <br>
+            6 PHASES<br>
+            Phase 1 → Concurrents (10 analysés)<br>
+            Phase 2 → Demande (mots-clés, questions, LinkedIn)<br>
+            Phase 3 → Plateformes (Malt, Upwork, Fiverr)<br>
+            Phase 4 → Client idéal (profil complet)<br>
+            Phase 5 → Trous dans le marché (opportunités)<br>
+            Phase 6 → Positionnement final (offre + prix + mots-clés)<br>
+            <br>
+            6 FICHIERS<br>
+            01-concurrents.html<br>
+            02-demande.html<br>
+            03-plateformes.html<br>
+            04-client-ideal.html<br>
+            05-trous-marche.html<br>
+            06-positionnement.html
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LA SUITE -->
+<!-- ============================================================ -->
+
+<section data-s="46" class="py-16">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-2xl mb-4">La suite</h2>
+    <p class="text-sol-gray leading-relaxed mb-6">Ton étude de marché est faite. Tu sais qui tu es, ce que tu vends, à qui, et pourquoi. Maintenant on organise et on construit.</p>
+    <div class="space-y-3">
+        <div class="card-light p-4" style="border-color:#4CC0C0"><div class="flex items-center justify-between"><div><span class="font-bold text-sm">Séance 5</span> — Étude de marché</div><span class="tag text-xs" style="border-color:#4CC0C0;color:#4CC0C0">Fait ✓</span></div></div>
+        <div class="card-light p-4"><div class="flex items-center justify-between"><div><span class="font-bold text-sm">Séance 6</span> — Ton QG Cowork</div><span class="tag border-sol-accent text-sol-accent text-xs">Prochaine</span></div></div>
+        <div class="card-light p-4"><div class="flex items-center justify-between"><div><span class="font-bold text-sm">Séance 7</span> — Identité de marque</div><span class="text-sol-gray text-xs font-mono">Bientôt</span></div></div>
+        <div class="card-light p-4"><div class="flex items-center justify-between"><div><span class="font-bold text-sm">Séance 8</span> — Ton site web + MCP</div><span class="text-sol-gray text-xs font-mono">Bientôt</span></div></div>
+    </div>
+</div>
+</section>
+
+<section data-s="47" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-accent p-6">
+        <h3 class="font-bold text-lg mb-3">Un truc à faire avant la séance 6</h3>
+        <p class="text-sol-gray text-sm leading-relaxed">Relis tes 6 fichiers HTML. Est-ce que ton positionnement te parle ? Est-ce que ta cible est claire ? Si un truc te semble pas juste, relance le prompt avec plus de détails. C'est maintenant qu'il faut ajuster — pas quand tu seras en train de construire ton site.</p>
+    </div>
+</div>
+</section>
+
+<section data-s="48" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card p-6">
+        <h4 class="font-bold mb-3">Si t'es bloqué</h4>
+        <div class="text-sol-gray text-sm space-y-2">
+            <p>→ Regarde la vidéo de cette séance</p>
+            <p>→ Relis cette présentation</p>
+            <p>→ Pose ta question sur le Slack</p>
+            <p>→ Clone le repo <span class="code-inline">denem-etude-marche</span> pour voir des exemples de résultats</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<section data-s="49" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr text-center">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-4">Fin de la séance 5.</h2>
+    <p class="text-sol-gray text-lg mb-2">Tu connais ton marché, tes concurrents, ta cible, ton positionnement.</p>
+    <p class="text-sol-gray">On se retrouve en séance 6 pour organiser ton QG avec Cowork.</p>
+</div>
+</section>
+
+<section data-s="50" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr text-center">
+    <div class="inline-block p-1 gradient-bg"><div class="px-8 py-4 bg-white"><span class="font-space font-bold text-xl gradient-text">DENEM Academy</span></div></div>
+    <p class="text-sol-gray text-xs mt-6 font-mono">Séance 5 — Étude de marché — Acte 2 : Lancer</p>
+</div>
+</section>
+
+<div class="py-16"></div>
+<footer class="py-8 border-t border-sol-lightgray">
+<div class="max-w-5xl mx-auto px-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+        <img src="logo-denem.jpeg" alt="DENEM" class="w-6 h-6 rounded">
+        <span class="font-space font-bold text-sm">DENEM Academy</span>
+    </div>
+    <span class="text-xs text-sol-gray font-mono">Séance 05 / 24</span>
+</div>
+</footer>
+
+
+<!-- JS -->
+<script>
+// ==========================================
+// Progress bar (smooth)
+// ==========================================
+window.addEventListener('scroll',()=>{
+    const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;
+    document.getElementById('pb').style.width=(s/d)*100+'%';
+    // Nav shadow on scroll
+    document.querySelector('nav').classList.toggle('scrolled',s>50);
+});
+
+// ==========================================
+// Scroll reveal (multiple types)
+// ==========================================
+const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('v')})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sr,.sr-left,.sr-right,.sr-scale,.stagger-list,.reveal-line').forEach(e=>ro.observe(e));
+
+// ==========================================
+// Section counter
+// ==========================================
+const allS=document.querySelectorAll('[data-s]'),sc=document.getElementById('sc');
+const sco=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){sc.textContent=x.target.dataset.s+' / 70';sc.style.transform='scale(1.1)';setTimeout(()=>sc.style.transform='scale(1)',200)}})},{threshold:.3});
+allS.forEach(s=>sco.observe(s));
+
+// ==========================================
+// Card 3D tilt
+// ==========================================
+document.querySelectorAll('.ch,.ch-tilt').forEach(c=>{
+    c.addEventListener('mousemove',e=>{
+        const r=c.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+        const rotX=(y-r.height/2)/30,rotY=(r.width/2-x)/30;
+        c.style.transform=`perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
+    });
+    c.addEventListener('mouseleave',()=>{c.style.transform='';});
+});
+
+// ==========================================
+// Cursor glow (follows mouse smoothly)
+// ==========================================
+const cg=document.getElementById('cg');
+let mx=0,my=0,gx=0,gy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;const cc=document.getElementById('cc');if(cc)cc.style.transform='translate('+(e.clientX-16)+'px,'+(e.clientY-16)+'px)';});
+(function ag(){gx+=(mx-gx)*.06;gy+=(my-gy)*.06;if(cg)cg.style.transform=`translate(${gx-150}px,${gy-150}px)`;requestAnimationFrame(ag)})();
+
+// ==========================================
+// Magnetic effect on tags/buttons
+// ==========================================
+document.querySelectorAll('.magnetic,.tag,.tb').forEach(el=>{
+    el.addEventListener('mousemove',e=>{
+        const r=el.getBoundingClientRect();
+        const x=(e.clientX-r.left-r.width/2)*.15;
+        const y=(e.clientY-r.top-r.height/2)*.15;
+        el.style.transform=`translate(${x}px,${y}px)`;
+    });
+    el.addEventListener('mouseleave',()=>{el.style.transform='';});
+});
+
+// ==========================================
+// Terminal typing animation on hover
+// ==========================================
+document.querySelectorAll('.terminal').forEach(t=>{
+    t.addEventListener('mouseenter',()=>{
+        t.querySelectorAll('.terminal-output').forEach((line,i)=>{
+            line.style.opacity='0';line.style.transform='translateX(-5px)';
+            setTimeout(()=>{line.style.transition='all .3s ease';line.style.opacity='1';line.style.transform='translateX(0)'},i*80);
+        });
+    });
+});
+
+// ==========================================
+// Cmd copy to clipboard on click
+// ==========================================
+document.querySelectorAll('.cmd').forEach(cmd=>{
+    cmd.addEventListener('click',()=>{
+        const text=cmd.textContent.replace('$','').replace('cliquer pour copier','').replace('copié !','').trim();
+        navigator.clipboard.writeText(text);
+        cmd.classList.add('copied');
+        setTimeout(()=>cmd.classList.remove('copied'),1500);
+    });
+});
+
+// Aussi rendre les code-inline copiables
+document.querySelectorAll('.code-inline').forEach(ci=>{
+    ci.style.cursor='pointer';
+    ci.title='Clique pour copier';
+    ci.addEventListener('click',()=>{
+        navigator.clipboard.writeText(ci.textContent.trim());
+        const orig=ci.style.background;
+        ci.style.background='#4CC0C0';ci.style.color='#fff';
+        setTimeout(()=>{ci.style.background=orig;ci.style.color=''},600);
+    });
+});
+
+// ==========================================
+// Parallax on floating elements
+// ==========================================
+window.addEventListener('scroll',()=>{
+    const s=window.scrollY;
+    document.querySelectorAll('.animate-float,.animate-float-slow,.animate-float-reverse').forEach((el,i)=>{
+        const speed=.02+i*.01;
+        el.style.transform=`translateY(${Math.sin(s*speed)*15}px) rotate(${Math.sin(s*speed)*3}deg)`;
+    });
+});
+
+// ==========================================
+// Easter egg: Konami code
+// ==========================================
+let kc=[];const ks=[38,38,40,40,37,39,37,39,66,65];
+document.addEventListener('keydown',e=>{
+    kc.push(e.keyCode);if(kc.length>ks.length)kc.shift();
+    if(JSON.stringify(kc)===JSON.stringify(ks)){
+        document.body.style.transition='filter 1s';
+        document.body.style.filter='hue-rotate(180deg)';
+        setTimeout(()=>document.body.style.filter='none',3000);
+    }
+});
+
+// ==========================================
+// Easter egg: triple click on logo
+// ==========================================
+let lc=0;
+document.querySelector('nav .rounded')?.addEventListener('click',()=>{
+    lc++;
+    if(lc===3){
+        document.querySelector('nav .rounded').style.transition='all .5s';
+        document.querySelector('nav .rounded').style.transform='rotate(360deg) scale(1.3)';
+        document.querySelector('nav .rounded').style.background='#4CC0C0';
+        setTimeout(()=>{
+            document.querySelector('nav .rounded').style.transform='';
+            document.querySelector('nav .rounded').style.background='';
+        },1000);
+        lc=0;
+    }
+});
+
+// ==========================================
+// Smooth appear for emojis
+// ==========================================
+document.querySelectorAll('.emoji').forEach(em=>{
+    em.addEventListener('mouseenter',()=>{em.style.transform='scale(1.3) rotate(-8deg)';});
+    em.addEventListener('mouseleave',()=>{em.style.transform='';});
+});
+</script>
+</body>
+</html>
