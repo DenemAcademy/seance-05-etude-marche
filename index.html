@@ -162,7 +162,7 @@ nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
 <body>
 
 <div class="progress-bar gradient-bg" id="pb"></div>
-<div class="sc" id="sc">1 / 70</div>
+<div class="sc" id="sc">1 / 50</div>
 <div class="noise"></div>
 <div class="cursor-glow" id="cg"></div>
 <div class="custom-cursor" id="cc"><img src="logo-denem.jpeg" alt=""></div>
@@ -233,14 +233,14 @@ nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
 <section data-s="4" class="py-20">
 <div class="max-w-3xl mx-auto px-4 sr">
     <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Comment ça va se passer.</h2>
-    <p class="text-sol-gray text-lg leading-relaxed mb-4">6 phases. À chaque phase, tu copies un prompt, tu le personnalises avec tes infos, tu le colles dans Claude Code, et il fait le boulot. À la fin de chaque phase, Claude Code te génère un fichier HTML avec les résultats.</p>
+    <p class="text-sol-gray text-lg leading-relaxed mb-4">7 phases. À chaque phase, tu copies un prompt, tu le personnalises avec tes infos, tu le colles dans Claude Code, et il fait le boulot. À chaque phase, Claude Code enrichit le même fichier : etude-marche.md. À la fin, phase 7, ChatGPT génère un HTML visuel et classe.</p>
     <p class="text-sol-gray leading-relaxed">C'est une recette. Tu suis les étapes, tu ajustes les ingrédients (tes infos), et tu obtiens ton étude de marché.</p>
 </div>
 </section>
 
 <section data-s="5" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
-    <h3 class="font-space font-bold text-xl mb-4">Les 6 phases</h3>
+    <h3 class="font-space font-bold text-xl mb-4">Les 7 phases</h3>
     <div class="space-y-3">
         <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="step border-sol-accent text-sol-accent">1</span><span class="font-bold text-sm">Tes infos</span></div><p class="text-sol-gray text-xs mt-1">Tu personnalises ton profil — l'étude est adaptée à TON projet</p></div>
         <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="step border-sol-accent text-sol-accent">2</span><span class="font-bold text-sm">Analyse des concurrents</span></div><p class="text-sol-gray text-xs mt-1">Claude Code scrape et analyse 10 concurrents</p></div>
@@ -300,7 +300,7 @@ nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
 <section data-s="10" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
     <h3 class="font-space font-bold text-xl mb-4">Le prompt — copie et personnalise</h3>
-    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">Je veux que tu fasses une analyse concurrentielle complète pour mon projet : [TON_PROJET]. Je cible [TA_CIBLE] dans la zone [TA_ZONE].<br><br>Étape 1 : Cherche sur Google les 10 premiers résultats pour ces requêtes :<br>- "[TON_PROJET] [TA_ZONE]"<br>- "consultant IA PME [TA_ZONE]"<br>- "automatisation IA entreprise [TA_ZONE]"<br>- "expert IA freelance [TA_ZONE]"<br><br>Étape 2 : Pour chaque concurrent trouvé, visite leur site et extrais :<br>- Nom et URL du site<br>- Leurs services (liste complète)<br>- Leurs prix (si affichés)<br>- Leur positionnement (comment ils se présentent en 1 phrase)<br>- Leur note Google et nombre d'avis<br>- Leurs forces (ce qu'ils font bien)<br>- Leurs faiblesses (ce qui manque, ce qui est mal fait)<br>- Présence LinkedIn (nombre d'abonnés, fréquence de publication)<br><br>Étape 3 : Génère un fichier HTML visuel et propre avec :<br>- Un tableau comparatif de tous les concurrents<br>- Un résumé des tendances (ce que tout le monde fait, ce que personne ne fait)<br>- Les opportunités identifiées<br>Sauvegarde le fichier sous le nom "01-concurrents.html"</div>
+    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">Je veux que tu fasses une analyse concurrentielle complète pour mon projet : [TON_PROJET]. Je cible [TA_CIBLE] dans la zone [TA_ZONE].<br><br>Étape 1 : Cherche sur Google les 10 premiers résultats pour ces requêtes :<br>- "[TON_PROJET] [TA_ZONE]"<br>- "consultant IA PME [TA_ZONE]"<br>- "automatisation IA entreprise [TA_ZONE]"<br>- "expert IA freelance [TA_ZONE]"<br><br>Étape 2 : Pour chaque concurrent trouvé, visite leur site et extrais :<br>- Nom et URL du site<br>- Leurs services (liste complète)<br>- Leurs prix (si affichés)<br>- Leur positionnement (comment ils se présentent en 1 phrase)<br>- Leur note Google et nombre d'avis<br>- Leurs forces (ce qu'ils font bien)<br>- Leurs faiblesses (ce qui manque, ce qui est mal fait)<br>- Présence LinkedIn (nombre d'abonnés, fréquence de publication)<br><br>Étape 3 : Génère un fichier HTML visuel et propre avec :<br>- Un tableau comparatif de tous les concurrents<br>- Un résumé des tendances (ce que tout le monde fait, ce que personne ne fait)<br>- Les opportunités identifiées<br>Crée un fichier etude-marche.md et écris dedans une section "## 1. Analyse concurrentielle" avec le tableau + résumé.</div>
 </section>
 
 <section data-s="11" class="py-12">
@@ -339,8 +339,8 @@ nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
 <section data-s="13" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
     <div class="card-green p-5">
-        <h4 class="font-bold mb-2">Le résultat : 01-concurrents.html</h4>
-        <p class="text-sol-gray text-sm">Un fichier HTML avec un beau tableau comparatif. Tu l'ouvres dans ton navigateur, tu vois tous tes concurrents côte à côte : ce qu'ils font, à quel prix, leurs forces et leurs faiblesses. C'est la base de tout.</p>
+        <h4 class="font-bold mb-2">Le résultat</h4>
+        <p class="text-sol-gray text-sm">Claude Code crée etude-marche.md avec la section "1. Analyse concurrentielle". Le fichier va grossir à chaque phase. Tu l'ouvres dans ton navigateur, tu vois tous tes concurrents côte à côte : ce qu'ils font, à quel prix, leurs forces et leurs faiblesses. C'est la base de tout.</p>
     </div>
 </div>
 </section>
@@ -359,13 +359,13 @@ nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
 <section data-s="15" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
     <h3 class="font-space font-bold text-xl mb-4">Le prompt — copie et personnalise</h3>
-    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">Je veux analyser la demande réelle pour mon projet : [TON_PROJET]. Je cible [TA_CIBLE] dans [TA_ZONE].<br><br>Étape 1 — Mots-clés Google : Cherche les mots-clés que les gens tapent sur Google en rapport avec [TES_SERVICES]. Pour chaque mot-clé, estime le volume de recherche et la concurrence.<br><br>Étape 2 — Questions fréquentes : Cherche sur Google "People Also Ask", Reddit, forums, et Quora les questions que les dirigeants de [TA_CIBLE] posent sur l'IA et l'automatisation.<br><br>Étape 3 — LinkedIn : Cherche les posts LinkedIn les plus engagés sur les sujets "IA pour PME", "automatisation entreprise", "[TES_SERVICES]". Note les sujets qui marchent et ceux qui marchent pas.<br><br>Étape 4 : Génère un fichier HTML avec :<br>- Top 20 mots-clés (volume, concurrence, opportunité)<br>- Top 10 questions que les gens posent<br>- Top 5 sujets LinkedIn qui marchent<br>- Les "trous" : ce que les gens cherchent et ne trouvent pas<br>Sauvegarde sous "02-demande.html"</div>
+    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">Je veux analyser la demande réelle pour mon projet : [TON_PROJET]. Je cible [TA_CIBLE] dans [TA_ZONE].<br><br>Étape 1 — Mots-clés Google : Cherche les mots-clés que les gens tapent sur Google en rapport avec [TES_SERVICES]. Pour chaque mot-clé, estime le volume de recherche et la concurrence.<br><br>Étape 2 — Questions fréquentes : Cherche sur Google "People Also Ask", Reddit, forums, et Quora les questions que les dirigeants de [TA_CIBLE] posent sur l'IA et l'automatisation.<br><br>Étape 3 — LinkedIn : Cherche les posts LinkedIn les plus engagés sur les sujets "IA pour PME", "automatisation entreprise", "[TES_SERVICES]". Note les sujets qui marchent et ceux qui marchent pas.<br><br>Étape 4 : Génère un fichier HTML avec :<br>- Top 20 mots-clés (volume, concurrence, opportunité)<br>- Top 10 questions que les gens posent<br>- Top 5 sujets LinkedIn qui marchent<br>- Les "trous" : ce que les gens cherchent et ne trouvent pas<br>Enrichis etude-marche.md avec la section "## 2. Analyse de la demande".</div>
 </section>
 
 <section data-s="16" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
     <div class="card-green p-5">
-        <h4 class="font-bold mb-2">Le résultat : 02-demande.html</h4>
+        <h4 class="font-bold mb-2">Le résultat</h4>
         <p class="text-sol-gray text-sm">Tu sais maintenant ce que les gens cherchent. Ces mots-clés tu les réutilises pour ton blog SEO (séance 9) et tes posts LinkedIn (séance 12). Les questions fréquentes deviennent tes contenus. Les trous deviennent ton positionnement.</p>
     </div>
 </div>
@@ -385,13 +385,13 @@ nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
 <section data-s="18" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
     <h3 class="font-space font-bold text-xl mb-4">Le prompt</h3>
-    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">Je veux analyser ce qui se vend sur les plateformes freelance pour [TES_SERVICES].<br><br>Étape 1 — Malt : Cherche les profils qui proposent des services similaires à [TES_SERVICES] sur malt.fr. Pour les 10 premiers : tarif journalier, services proposés, note, nombre de missions, ce qui manque dans leur offre.<br><br>Étape 2 — Upwork : Même chose sur upwork.com pour les freelances qui vendent [TES_SERVICES]. Tarifs, services, avis, forces, faiblesses.<br><br>Étape 3 — Fiverr : Pareil sur fiverr.com. Note les prix les plus bas et les plus hauts pour des services similaires.<br><br>Étape 4 : Génère un fichier HTML avec :<br>- Tableau comparatif des 3 plateformes (nombre de freelances, tarifs moyens, services les plus vendus)<br>- Les services les plus demandés vs les moins proposés<br>- Les fourchettes de prix du marché<br>- Les opportunités (ce qui manque, ce qui est mal fait)<br>Sauvegarde sous "03-plateformes.html"</div>
+    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">Je veux analyser ce qui se vend sur les plateformes freelance pour [TES_SERVICES].<br><br>Étape 1 — Malt : Cherche les profils qui proposent des services similaires à [TES_SERVICES] sur malt.fr. Pour les 10 premiers : tarif journalier, services proposés, note, nombre de missions, ce qui manque dans leur offre.<br><br>Étape 2 — Upwork : Même chose sur upwork.com pour les freelances qui vendent [TES_SERVICES]. Tarifs, services, avis, forces, faiblesses.<br><br>Étape 3 — Fiverr : Pareil sur fiverr.com. Note les prix les plus bas et les plus hauts pour des services similaires.<br><br>Étape 4 : Génère un fichier HTML avec :<br>- Tableau comparatif des 3 plateformes (nombre de freelances, tarifs moyens, services les plus vendus)<br>- Les services les plus demandés vs les moins proposés<br>- Les fourchettes de prix du marché<br>- Les opportunités (ce qui manque, ce qui est mal fait)<br>Enrichis etude-marche.md avec "## 3. Benchmark plateformes".</div>
 </section>
 
 <section data-s="19" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
     <div class="card-green p-5">
-        <h4 class="font-bold mb-2">Le résultat : 03-plateformes.html</h4>
+        <h4 class="font-bold mb-2">Le résultat</h4>
         <p class="text-sol-gray text-sm">Tu vois les vrais prix du marché. Pas les prix que les concurrents affichent sur leur site — les prix que les gens paient vraiment. C'est ça qui va t'aider à fixer tes tarifs.</p>
     </div>
 </div>
@@ -411,13 +411,13 @@ nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
 <section data-s="21" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
     <h3 class="font-space font-bold text-xl mb-4">Le prompt</h3>
-    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">À partir de l'analyse des concurrents (01-concurrents.html), de la demande (02-demande.html) et des plateformes (03-plateformes.html), définis mon profil client idéal.<br><br>Mon projet : [TON_PROJET]<br>Mes services : [TES_SERVICES]<br>Ma zone : [TA_ZONE]<br>Mon budget cible : [TON_BUDGET_CIBLE]<br><br>Pour le profil client idéal, détaille :<br>- Secteur d'activité (2-3 secteurs prioritaires avec justification)<br>- Taille de l'entreprise (nombre de salariés, CA approximatif)<br>- Le décideur (qui prend la décision d'achat : gérant, DG, DAF, DSI...)<br>- Ses 3 plus gros problèmes que l'IA peut résoudre<br>- Son budget probable pour des services IA<br>- Où le trouver (LinkedIn, Google, événements, réseaux...)<br>- Ce qui le convaincrait de bosser avec toi (arguments clés)<br><br>Génère un fichier HTML visuel avec le profil complet, illustré et structuré.<br>Sauvegarde sous "04-client-ideal.html"</div>
+    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">À partir de l'analyse des concurrents (01-concurrents.html), de la demande (02-demande.html) et des plateformes (03-plateformes.html), définis mon profil client idéal.<br><br>Mon projet : [TON_PROJET]<br>Mes services : [TES_SERVICES]<br>Ma zone : [TA_ZONE]<br>Mon budget cible : [TON_BUDGET_CIBLE]<br><br>Pour le profil client idéal, détaille :<br>- Secteur d'activité (2-3 secteurs prioritaires avec justification)<br>- Taille de l'entreprise (nombre de salariés, CA approximatif)<br>- Le décideur (qui prend la décision d'achat : gérant, DG, DAF, DSI...)<br>- Ses 3 plus gros problèmes que l'IA peut résoudre<br>- Son budget probable pour des services IA<br>- Où le trouver (LinkedIn, Google, événements, réseaux...)<br>- Ce qui le convaincrait de bosser avec toi (arguments clés)<br><br>Génère un fichier HTML visuel avec le profil complet, illustré et structuré.<br>Enrichis etude-marche.md avec "## 4. Profil client idéal".</div>
 </section>
 
 <section data-s="22" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
     <div class="card-green p-5">
-        <h4 class="font-bold mb-2">Le résultat : 04-client-ideal.html</h4>
+        <h4 class="font-bold mb-2">Le résultat</h4>
         <p class="text-sol-gray text-sm">Tu sais exactement qui tu cibles. Quand tu crées ton site (séance 8), tu parles à cette personne. Quand tu prospectes (séance 15), tu cherches cette personne. Plus de "je vends à tout le monde" — tu as une cible précise.</p>
     </div>
 </div>
@@ -437,13 +437,13 @@ nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
 <section data-s="24" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
     <h3 class="font-space font-bold text-xl mb-4">Le prompt</h3>
-    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">À partir de toutes les analyses précédentes (01-concurrents.html, 02-demande.html, 03-plateformes.html, 04-client-ideal.html), identifie les trous dans le marché.<br><br>Mon projet : [TON_PROJET]<br>Mes services : [TES_SERVICES]<br><br>Analyse :<br>1. Ce que TOUS les concurrents font → c'est le standard, je dois le proposer aussi<br>2. Ce que les concurrents font MAL → c'est l'opportunité d'être meilleur<br>3. Ce que PERSONNE ne fait → c'est mon positionnement différenciant<br>4. Ce que les clients DEMANDENT mais ne TROUVENT PAS → c'est l'opportunité la plus grande<br>5. Les segments de clientèle IGNORÉS par les concurrents → c'est ma niche potentielle<br><br>Pour chaque trou identifié, propose :<br>- Le service que je pourrais créer<br>- Le prix que je pourrais facturer<br>- L'argument de vente en 1 phrase<br><br>Génère un fichier HTML visuel avec les trous classés par opportunité (du plus grand au plus petit).<br>Sauvegarde sous "05-trous-marche.html"</div>
+    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">À partir de toutes les analyses précédentes (01-concurrents.html, 02-demande.html, 03-plateformes.html, 04-client-ideal.html), identifie les trous dans le marché.<br><br>Mon projet : [TON_PROJET]<br>Mes services : [TES_SERVICES]<br><br>Analyse :<br>1. Ce que TOUS les concurrents font → c'est le standard, je dois le proposer aussi<br>2. Ce que les concurrents font MAL → c'est l'opportunité d'être meilleur<br>3. Ce que PERSONNE ne fait → c'est mon positionnement différenciant<br>4. Ce que les clients DEMANDENT mais ne TROUVENT PAS → c'est l'opportunité la plus grande<br>5. Les segments de clientèle IGNORÉS par les concurrents → c'est ma niche potentielle<br><br>Pour chaque trou identifié, propose :<br>- Le service que je pourrais créer<br>- Le prix que je pourrais facturer<br>- L'argument de vente en 1 phrase<br><br>Génère un fichier HTML visuel avec les trous classés par opportunité (du plus grand au plus petit).<br>Enrichis etude-marche.md avec "## 5. Trous dans le marché".</div>
 </section>
 
 <section data-s="25" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
     <div class="card-green p-5">
-        <h4 class="font-bold mb-2">Le résultat : 05-trous-marche.html</h4>
+        <h4 class="font-bold mb-2">Le résultat</h4>
         <p class="text-sol-gray text-sm">Tu vois noir sur blanc où sont les opportunités. "Tous les consultants IA vendent de la formation. Personne ne connecte l'IA aux outils existants du client." Boom — c'est ton angle.</p>
     </div>
 </div>
@@ -463,13 +463,13 @@ nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
 <section data-s="27" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
     <h3 class="font-space font-bold text-xl mb-4">Le prompt</h3>
-    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">À partir de toutes les analyses (01 à 05), crée mon document de positionnement final.<br><br>Mon projet : [TON_PROJET]<br>Mes services : [TES_SERVICES]<br>Ma cible : [TA_CIBLE]<br>Ma zone : [TA_ZONE]<br>Mon budget cible : [TON_BUDGET_CIBLE]<br><br>Le document doit contenir :<br><br>1. MON POSITIONNEMENT<br>- Ma phrase de positionnement (1 phrase qui résume ce que je fais et pour qui)<br>- Ce qui me différencie des concurrents (3 points max)<br>- Mon "pourquoi moi" en 3 phrases<br><br>2. MON OFFRE<br>- La liste de mes services avec description courte<br>- Ma grille tarifaire (prix basés sur le benchmark du marché)<br>- Mon service d'entrée (le plus facile à vendre)<br>- Mon service premium (le plus rentable)<br><br>3. MA CIBLE<br>- Résumé du profil client idéal<br>- Les 3 problèmes que je résous<br>- Les arguments qui convertissent<br><br>4. MES MOTS-CLÉS<br>- Top 10 mots-clés pour le SEO (blog, séance 9)<br>- Top 5 sujets pour LinkedIn (posts, séance 12)<br>- Top 3 angles pour la prospection (messages, séance 15)<br><br>5. MON PLAN D'ACTION<br>- Les 3 premières actions à faire cette semaine<br><br>Génère un fichier HTML complet, visuel, professionnel. C'est mon document de référence pour toute la suite de la formation.<br>Sauvegarde sous "06-positionnement.html"</div>
+    <div class="cmd text-xs" style="white-space:normal;line-height:1.7">À partir de toutes les analyses (01 à 05), crée mon document de positionnement final.<br><br>Mon projet : [TON_PROJET]<br>Mes services : [TES_SERVICES]<br>Ma cible : [TA_CIBLE]<br>Ma zone : [TA_ZONE]<br>Mon budget cible : [TON_BUDGET_CIBLE]<br><br>Le document doit contenir :<br><br>1. MON POSITIONNEMENT<br>- Ma phrase de positionnement (1 phrase qui résume ce que je fais et pour qui)<br>- Ce qui me différencie des concurrents (3 points max)<br>- Mon "pourquoi moi" en 3 phrases<br><br>2. MON OFFRE<br>- La liste de mes services avec description courte<br>- Ma grille tarifaire (prix basés sur le benchmark du marché)<br>- Mon service d'entrée (le plus facile à vendre)<br>- Mon service premium (le plus rentable)<br><br>3. MA CIBLE<br>- Résumé du profil client idéal<br>- Les 3 problèmes que je résous<br>- Les arguments qui convertissent<br><br>4. MES MOTS-CLÉS<br>- Top 10 mots-clés pour le SEO (blog, séance 9)<br>- Top 5 sujets pour LinkedIn (posts, séance 12)<br>- Top 3 angles pour la prospection (messages, séance 15)<br><br>5. MON PLAN D'ACTION<br>- Les 3 premières actions à faire cette semaine<br><br>Génère un fichier HTML complet, visuel, professionnel. C'est mon document de référence pour toute la suite de la formation.<br>Enrichis etude-marche.md avec "## 6. Positionnement final".</div>
 </section>
 
 <section data-s="28" class="py-12">
 <div class="max-w-3xl mx-auto px-4 sr">
     <div class="card-accent p-6">
-        <h4 class="font-bold mb-3">Le résultat : 06-positionnement.html</h4>
+        <h4 class="font-bold mb-3">Le résultat</h4>
         <p class="text-sol-gray text-sm leading-relaxed">C'est TON document. Celui que tu gardes ouvert à côté de toi pour toute la suite. Quand tu crées ton site → tu reprends le positionnement. Quand tu écris un post LinkedIn → tu reprends les mots-clés. Quand tu prospectes → tu reprends les arguments. Tout découle de là.</p>
     </div>
 </div>
@@ -588,7 +588,7 @@ nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
 <div class="max-w-3xl mx-auto px-4 sr">
     <h2 class="font-space font-bold text-3xl mb-6">Ce qu'il faut retenir.</h2>
     <div class="space-y-3">
-        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">6 phases, 6 prompts, 6 fichiers HTML</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">7 phases, 7 prompts, 1 fichier .md qui grossit, 1 HTML final</span></div>
         <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Tu personnalises chaque prompt avec tes variables</span></div>
         <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Claude Code fait le boulot — tu vérifies et tu ajustes</span></div>
         <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Tu repars avec ton positionnement, tes prix, tes mots-clés, ta cible</span></div>
@@ -615,7 +615,7 @@ nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
             [TA_ZONE] → ville, région, pays<br>
             [TON_BUDGET_CIBLE] → fourchette de prix<br>
             <br>
-            6 PHASES<br>
+            7 PHASES<br>
             Phase 1 → Concurrents (10 analysés)<br>
             Phase 2 → Demande (mots-clés, questions, LinkedIn)<br>
             Phase 3 → Plateformes (Malt, Upwork, Fiverr)<br>
@@ -724,7 +724,7 @@ document.querySelectorAll('.sr,.sr-left,.sr-right,.sr-scale,.stagger-list,.revea
 // Section counter
 // ==========================================
 const allS=document.querySelectorAll('[data-s]'),sc=document.getElementById('sc');
-const sco=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){sc.textContent=x.target.dataset.s+' / 70';sc.style.transform='scale(1.1)';setTimeout(()=>sc.style.transform='scale(1)',200)}})},{threshold:.3});
+const sco=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){sc.textContent=x.target.dataset.s+' / 50';sc.style.transform='scale(1.1)';setTimeout(()=>sc.style.transform='scale(1)',200)}})},{threshold:.3});
 allS.forEach(s=>sco.observe(s));
 
 // ==========================================
