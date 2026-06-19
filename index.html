@@ -3266,6 +3266,353 @@ BLOC D &mdash; TON TERRAIN
 
       <div class="code-panel mt-6 overflow-hidden border-2 border-neutral-950 bg-neutral-950 text-white shadow-neo">
         <div class="flex items-center justify-between gap-4 border-b-2 border-white/20 bg-neutral-900 px-4 py-2">
+          <span class="font-mono text-[11px] font-black uppercase tracking-[.16em] text-red-100">Prompt maitre complet</span>
+          <button type="button" class="copy-btn shrink-0 border-2 border-white bg-white px-3 py-1 text-xs font-black text-neutral-950 transition hover:-translate-y-0.5">Copier</button>
+        </div>
+        <pre class="max-w-full whitespace-pre-wrap break-words p-5 text-sm leading-7"><code># ==========================================================
+# PROMPT - Etude de marche complete en 7 etapes enchainees
+# ==========================================================
+
+# ----------------------------------------------------------
+# MODE AUTONOMIE TOTALE - regle n&deg;1 absolue
+# ----------------------------------------------------------
+
+1. Des la reception de ce prompt, tu demarres IMMEDIATEMENT.
+Tu ne me demandes AUCUNE validation, AUCUNE confirmation, AUCUNE precision.
+Pas de "veux-tu que je continue ?", pas de "est-ce que c'est ok ?".
+Tu enchaines les 7 etapes en totale autonomie jusqu'a la fin.
+
+2. Tu me notifies UNIQUEMENT a la fin, quand les 3 livrables sont generes :
+"&check; Etude terminee. Fichiers : etude-marche.md | .xlsx | .html"
+
+3. Pendant que tu travailles, tu montres ton raisonnement et Chrome qui navigue,
+mais tu ne t'arretes JAMAIS pour attendre ma reponse. Tu avances.
+
+4. Exception unique : si les outils Chrome ne sont pas dispo au demarrage,
+STOP et dis-le. Dans tous les autres cas : tu continues seul.
+
+# ----------------------------------------------------------
+# REGLE CHROME - extension obligatoire
+# ----------------------------------------------------------
+
+- Tu utilises UNIQUEMENT l'extension Chrome (outils mcp__claude-in-chrome__*).
+- INTERDIT : WebSearch, WebFetch, requetes HTTP directes.
+- Je dois VOIR Chrome bouger : onglets qui s'ouvrent, pages qui chargent, clics.
+
+# ----------------------------------------------------------
+# GESTION DU CONTEXTE - pour ne PAS etre tronque
+# (obligatoire - sinon tu perds tout avant l'etape 7)
+# ----------------------------------------------------------
+
+A) WRITE-THEN-DISCARD (regle centrale)
+Apres CHAQUE page visitee : tu extrais les donnees structurees, tu les
+APPEND immediatement dans le bon fichier scratch sur disque, PUIS tu
+oublies le contenu brut. Le HTML, les avis bruts, le markup = poubelle.
+Seul reste en memoire : 1 ligne de resume + le compteur (ex : "12/50 done").
+
+B) SUB-AGENTS PAR ETAPE (Task tool)
+Chaque etape 1 a 6 est deleguee a un sub-agent via l'outil Task.
+Le sub-agent a son propre contexte frais, fait son boulot, ecrit ses
+fichiers scratch + sa section dans etude-marche.md, et te rend un resume
+de 10 lignes max. Tu (agent principal) ne vois jamais les 400 pages :
+tu vois 6 resumes courts. Etape 7 (assemblage final), tu la fais toi.
+
+C) FICHIERS SCRATCH PAR BATCH
+Cree des le debut un dossier scratch/. Ecris scratch/concurrent-01.md,
+scratch/concurrent-02.md, scratch/motcle-01.md, scratch/freelance-01.md, etc.
+Un fichier par entite. A l'etape 7, tu lis ces fichiers depuis le disque
+(pas depuis ta memoire) pour generer le .xlsx et le .html.
+
+D) BATCHING + CHECKPOINTS
+Traite par lot de 10. Apres chaque lot :
+1. Confirme l'ecriture disque.
+2. Vide ton contexte de travail (garde juste "lot X/5 termine").
+3. Passe au lot suivant.
+Jamais plus de 10 entites en memoire a la fois.
+
+# ----------------------------------------------------------
+# GESTION DES BLOCAGES - tu ne restes JAMAIS coince
+# ----------------------------------------------------------
+
+- Login requis (LinkedIn, Malt page 2+, etc.) : skip la source, note dans
+le .md "donnees partielles (login requis)", et continue.
+- Captcha detecte : note "captcha - a resoudre manuellement [URL]",
+skip cette entite, continue avec la suivante. Tu me listes les captchas
+restants a la fin, je les ferai en un coup.
+- Timeout 15s par page : si ca ne charge pas, skip et note "timeout [URL]".
+- Erreur 403/404/Cloudflare : skip + note, ne tente pas 3 fois.
+- Donnees manquantes (ex : prix non affiche) : note "N/A" et passe.
+
+REGLE D'OR : toujours continuer. Un blocage = 1 ligne dans le .md, puis on avance.
+
+# ----------------------------------------------------------
+# MES 18 VARIABLES - 4 blocs
+# ----------------------------------------------------------
+
+# Bloc A - Toi
+Prenom : [TON_PRENOM]
+Projet : [TON_PROJET]
+Background : [TON_BACKGROUND]
+Outils : [TES_OUTILS]
+Statut : [TON_STATUT]
+Disponibilite : [TA_DISPONIBILITE]
+
+# Bloc B - Ce que tu vends
+Services : [TES_SERVICES]
+Service d'entree : [TON_SERVICE_ENTREE]
+Service premium : [TON_SERVICE_PREMIUM]
+Modele de prix : [TON_MODELE_PRIX]
+Budget cible : [TON_BUDGET_CIBLE]
+
+# Bloc C - A qui tu vends
+Cible : [TA_CIBLE]
+Secteur : [TON_SECTEUR]
+Decideur : [TON_DECIDEUR]
+Zone : [TA_ZONE]
+Client reve : [TON_CLIENT_REVE]
+
+# Bloc D - Ton terrain
+Concurrents connus : [TES_CONCURRENTS_CONNUS]
+Requetes custom : [TES_REQUETES_CUSTOM]
+Avantage : [TON_AVANTAGE]
+
+# ----------------------------------------------------------
+# MISSION - tu enchaines les 7 etapes sans t'arreter
+# ----------------------------------------------------------
+
+Cree un fichier etude-marche.md des le debut et enrichis-le a chaque etape.
+A la fin des 7 etapes, genere etude-marche.xlsx (5 onglets) et etude-marche.html.
+
+# ----------------------------------------------------------
+# ETAPE 1/7 - ANALYSE CONCURRENTIELLE (50 concurrents)
+# ----------------------------------------------------------
+
+Ouvre google.fr DANS Chrome. Cherche les 50 premiers resultats pertinents
+en combinant ces requetes :
+- "[TON_PROJET] [TA_ZONE]"
+- "consultant IA [TON_SECTEUR] [TA_ZONE]"
+- "automatisation IA [TON_SECTEUR]"
+- "expert IA freelance [TA_ZONE]"
+- [TES_REQUETES_CUSTOM]
+
+Pour CHACUN des 50 concurrents, ouvre son site dans un onglet Chrome et extrais :
+- Nom, URL, services connus, prix (ou "non affiche"), positionnement en 1 phrase
+- Note Google Maps + nombre d'avis (ouvre Google Maps DANS Chrome)
+- 5 derniers avis Google (positifs ET negatifs)
+- Forces / faiblesses
+- Presence LinkedIn : abonnes, frequence de posts, dernier post engage (DANS Chrome)
+
+Pour chaque concurrent, interroge l'API Sirene : SIREN, date creation, effectif, code NAF.
+Si Pappers dispo : CA dernier exercice, resultat net, statut juridique.
+
+Ecris dans etude-marche.md section "## 1. Analyse concurrentielle" :
+- Tableau des 50 concurrents (toutes les colonnes ci-dessus)
+- Tendances : ce que TOUS font vs ce que PERSONNE ne fait
+- Top 5 concurrents dangereux + pourquoi
+- Top 5 concurrents faibles + comment les depasser
+
+# ----------------------------------------------------------
+# ETAPE 2/7 - ANALYSE DE LA DEMANDE
+# ----------------------------------------------------------
+
+Toujours DANS Chrome.
+
+a) Mots-cles Google : cherche sur google.fr les mots-cles lies a [TES_SERVICES]
+dans le contexte de [TON_SECTEUR]. Pour chaque mot-cle : nombre de resultats,
+qualite des resultats existants (bonne/moyenne/faible), niveau d'opportunite (1-5).
+Minimum 50 mots-cles.
+
+b) "People Also Ask" : pour chaque recherche Google, note les questions du bloc
+"Autres questions posees". Minimum 30 questions - celles que [TON_DECIDEUR] se pose.
+
+c) Reddit + forums : cherche "site:reddit.com [TON_SECTEUR] IA automatisation"
++ forums metier. Quels problemes ? Quelles solutions cherchees ?
+
+d) LinkedIn : cherche les posts les plus engages sur "IA pour [TON_SECTEUR]",
+"automatisation [TON_SECTEUR]", [TES_REQUETES_CUSTOM]. Minimum 20 posts.
+Note likes/commentaires, sujets qui marchent vs ceux qui marchent pas.
+
+Ecris dans etude-marche.md section "## 2. Analyse de la demande" :
+- Top 50 mots-cles + niveau concurrence + score opportunite
+- Top 30 questions frequentes
+- Top 20 sujets LinkedIn engageants
+- Les trous : ce que les gens cherchent mais ne trouvent pas
+
+# ----------------------------------------------------------
+# ETAPE 3/7 - BENCHMARK PLATEFORMES FREELANCE
+# ----------------------------------------------------------
+
+Toujours DANS Chrome. Analyse 50 profils au total repartis :
+- malt.fr : 20 profils (clique sur chacun dans Chrome)
+- comeup.com : 15 profils (clique sur chacun)
+- codeur.com : 10 profils (clique sur chacun)
+- upwork.com : 5 profils si pertinent pour [TA_ZONE]
+
+Pour chaque profil, extrais :
+- TJM (tarif journalier moyen)
+- Services proposes
+- Note + nombre de missions
+- Ce qui manque dans leur offre
+- Leur positionnement en 1 phrase
+
+Ecris dans etude-marche.md section "## 3. Benchmark plateformes" :
+- Tableau comparatif par plateforme (nb freelances, TJM moyen, services top-vendus)
+- Services les plus demandes vs les moins proposes
+- Fourchettes de prix REELLES du marche
+- Recommandation : quels prix afficher par rapport au marche
+
+# ----------------------------------------------------------
+# ETAPE 4/7 - PROFIL CLIENT IDEAL
+# ----------------------------------------------------------
+
+A partir des etapes 1, 2, 3. Verifie 20 profils LinkedIn de [TON_DECIDEUR]
+dans [TA_ZONE] DANS Chrome. Cherche 10 lieux (associations pro, evenements,
+groupes, meetups) sur Google DANS Chrome.
+
+Ecris dans etude-marche.md section "## 4. Profil client ideal" :
+- 2-3 secteurs prioritaires + justification (en partant de [TON_SECTEUR])
+- Taille d'entreprise ideale (salaries, CA approximatif)
+- Le decideur : titre, quotidien, frustrations, ce qui l'empeche de dormir
+- Ses 5 plus gros problemes que l'IA peut resoudre (classes par urgence)
+- Budget probable pour des services IA (base sur etape 3)
+- Ou le trouver : LinkedIn (profils types), Google, evenements, associations
+- Ce qui le convaincrait de bosser avec MOI (utilise [TON_BACKGROUND] + [TON_AVANTAGE])
+- Message LinkedIn en 2 versions (courte + longue) qui le ferait repondre
+
+# ----------------------------------------------------------
+# ETAPE 5/7 - TROUS DANS LE MARCHE
+# ----------------------------------------------------------
+
+Croise TOUTES les analyses precedentes (etapes 1 a 4). Identifie 15 trous minimum.
+Pour CHAQUE trou : retourne DANS Chrome, tape la requete correspondante sur Google,
+ouvre les 5 premiers resultats. Un trou n'est valide QUE si tu l'as verifie dans Chrome -
+sinon c'est une supposition et ca ne compte pas.
+
+15 trous x 5 verifications = 75 onglets Chrome minimum.
+
+Analyse ces 5 dimensions :
+1. Ce que TOUS les concurrents font : standard a proposer
+2. Ce qu'ils font MAL : ou etre meilleur
+3. Ce que PERSONNE ne fait : differenciation
+4. Ce que les clients demandent (etape 2) mais ne trouvent pas : opportunite max
+5. Segments de [TON_SECTEUR] ignores par les concurrents : niche
+
+Pour chaque trou :
+- Service a creer avec [TES_OUTILS]
+- Prix a facturer (base sur etape 3)
+- Argument de vente en 1 phrase pour [TON_DECIDEUR]
+- Difficulte technique (facile / moyen / avance) avec mes outils
+- Score opportunite x faisabilite (1-10)
+
+Classe du plus grand au plus petit. Ecris dans etude-marche.md section "## 5. Trous dans le marche".
+
+# ----------------------------------------------------------
+# ETAPE 6/7 - POSITIONNEMENT FINAL
+# ----------------------------------------------------------
+
+Reverifie DANS Chrome les prix des 10 concurrents les plus pertinents (etape 1)
+et des 10 profils freelance les plus proches (etape 3) AVANT de fixer mes prix.
+Reverifie DANS Chrome les 10 mots-cles SEO finaux en tapant chacun sur Google.
+
+Ecris dans etude-marche.md section "## 6. Positionnement final" :
+
+1. MON POSITIONNEMENT
+- Ma phrase de positionnement (1 phrase percutante : ce que je fais, pour qui)
+- 3 differenciateurs (bases sur les trous etape 5)
+- "Pourquoi moi" en 3 phrases (utilise [TON_BACKGROUND] + [TON_AVANTAGE])
+
+2. MON OFFRE
+- Services avec description courte + prix
+- Grille tarifaire complete (basee sur etape 3)
+- Service d'entree : comment je le presente, pourquoi gratuit/pas cher
+- Service premium : comment je le vends apres l'entree, le ROI client
+- Retainer mensuel : ce que je facture, pourquoi
+
+3. MA CIBLE
+- Resume du profil client ideal (etape 4)
+- 5 problemes que je resous, classes par impact
+- Arguments qui convertissent [TON_DECIDEUR]
+- Message LinkedIn prospection (version courte + longue)
+
+4. MES MOTS-CLES
+- Top 10 mots-cles SEO : blog (seance 9)
+- Top 5 sujets LinkedIn : posts (seance 12)
+- Top 3 angles prospection : messages (seance 15)
+- Top 3 lead magnets : tunnel (seance 11)
+
+5. PLAN D'ACTION CETTE SEMAINE
+- 5 premieres actions concretes
+- Ce que je dois avoir pret avant la seance 6
+
+# ----------------------------------------------------------
+# ETAPE 7/7 - LES 3 LIVRABLES FINAUX
+# ----------------------------------------------------------
+
+Tu as rempli etude-marche.md en 6 sections. Maintenant genere les 2 livrables manquants.
+
+# 7.1 - etude-marche.xlsx (Excel, 5 ONGLETS, DESIGN SOIGNE)
+
+Cree un script Python avec openpyxl et execute-le. Design obligatoire :
+- Header ligne 1 : fond #272B5C, texte blanc, gras, centre, hauteur 28px
+- Lignes alternees : blanc / #f4f7fb
+- Bordures fines grises (#e8edf2) sur toutes les cellules
+- Colonnes auto-width selon contenu
+- Freeze pane sur la ligne d'en-tete
+- Accent couleur #4CC0C0 pour les valeurs-cles
+
+Onglet 1 - "Concurrents" (50 lignes de donnees)
+Colonnes : Nom | URL | Services | Prix | Google * | Nb avis | SIREN | Date creation | Effectif | NAF | CA | Resultat net | LinkedIn abonnes | Frequence posts | Forces | Faiblesses | Dangerosite (1-5)
+
+Onglet 2 - "Demande" (3 blocs)
+Bloc A (50 lignes) : Mot-cle | Volume estime | Concurrence | Qualite existante | Score opportunite (1-5)
+Bloc B (30 lignes) : Questions People Also Ask
+Bloc C (20 lignes) : Sujets LinkedIn engageants | Likes moyens | Commentaires moyens
+
+Onglet 3 - "Plateformes" (50 lignes)
+Colonnes : Plateforme | Nom profil | Services | TJM | Note | Nb missions | Ce qui manque | Positionnement
+
+Onglet 4 - "Client &amp; Trous" (2 blocs)
+Bloc A : profil client ideal (1 ligne par attribut, 2 colonnes : Attribut | Valeur)
+Bloc B (15 lignes) : Trou | Service a creer | Prix | Argument | Difficulte | Score opportunite
+
+Onglet 5 - "Positionnement &amp; Plan" (blocs thematiques)
+Phrase de positionnement | 3 differenciateurs | Grille tarifaire complete | Top 10 mots-cles SEO | Top 5 sujets LinkedIn | Top 3 angles prospection | Top 3 lead magnets | Plan semaine (5 actions)
+
+# 7.2 - etude-marche.html (single file, DESIGN PRO)
+
+Transforme etude-marche.md en HTML autonome (tout inline, aucune dependance externe sauf Google Fonts).
+
+Design obligatoire :
+- Fond blanc, typographie Inter (Google Fonts), style SaaS moderne
+- Navy #272B5C pour les titres, teal #4CC0C0 pour les accents, gris #64748d pour le texte
+- Header : "Etude de marche - [TON_PRENOM] - [TON_PROJET]" + date du jour + sommaire cliquable
+- Chaque section (## titre) = pleine largeur avec padding genereux
+- Tableaux HTML styles : hover sur les lignes, header colore navy
+- Listes = cartes avec icones ou puces stylees
+- Chiffres-cles mis en avant avec la couleur accent teal
+- Responsive mobile-friendly
+- Micro-animations CSS : fade-in au scroll, hover sur les cartes
+- Bas de page : recap visuel avec les chiffres-cles
+
+Le resultat doit ressembler a un document de consulting professionnel.
+
+# ----------------------------------------------------------
+# LIVRABLES FINAUX a la fin du run
+# ----------------------------------------------------------
+
+- etude-marche.md (500-1000 lignes, 6 sections)
+- etude-marche.xlsx (5 onglets styles)
+- etude-marche.html (version visuelle pro)
+
+GO. Tu demarres MAINTENANT par l'etape 1/7. Tu ne me poses AUCUNE question.
+Tu enchaines les 7 etapes seul, en autonomie totale. Montre-moi ton raisonnement
+et Chrome qui navigue au fil de l'eau, mais ne t'arrete jamais pour me demander
+quoi que ce soit. Tu me notifies UNIQUEMENT a la fin avec "&check; Etude terminee"
+et la liste des 3 fichiers produits.</code></pre>
+      </div>
+
+      <div class="code-panel mt-6 overflow-hidden border-2 border-neutral-950 bg-neutral-950 text-white shadow-neo">
+        <div class="flex items-center justify-between gap-4 border-b-2 border-white/20 bg-neutral-900 px-4 py-2">
           <span class="font-mono text-[11px] font-black uppercase tracking-[.16em] text-red-100">Prompt analyse concurrentielle</span>
           <button type="button" class="copy-btn shrink-0 border-2 border-white bg-white px-3 py-1 text-xs font-black text-neutral-950 transition hover:-translate-y-0.5">Copier</button>
         </div>
